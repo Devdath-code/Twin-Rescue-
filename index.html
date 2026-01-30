@@ -753,21 +753,21 @@
         }
 
         // Update system status panel
-        function updateSystemStatus() {
-            const isConnected = healthData.bpm > 0;
-
-            document.getElementById('sysConnection').textContent = isConnected ? 'Active' : 'Inactive';
-            document.getElementById('sysConnection').className = `status-value ${isConnected ? 'text-green' : 'text-red'}`;
-
-            document.getElementById('sysHeart').textContent = healthData.heartRate > 0 ? 'Online' : 'Offline';
-            document.getElementById('sysHeart').className = `status-value ${healthData.heartRate > 0 ? 'text-green' : 'text-gray'}`;
-
-            document.getElementById('sysSpo2').textContent = healthData.spo2 > 0 ? 'Online' : 'Offline';
-            document.getElementById('sysSpo2').className = `status-value ${healthData.spo2 > 0 ? 'text-green' : 'text-gray'}`;
-
-            const gpsActive = healthData.latitude !== 0 && healthData.longitude !== 0;
-            document.getElementById('sysGps').textContent = gpsActive ? 'Online' : 'Offline';
-            document.getElementById('sysGps').className = `status-value ${gpsActive ? 'text-green' : 'text-gray'}`;
+        function updateSystemStatus() {    
+          const isConnected = healthData.bpm > 0;    
+        
+          document.getElementById('sysConnection').textContent =
+            isConnected ? 'Active' : 'Inactive';
+          document.getElementById('sysConnection').className =
+            `status-value ${isConnected ? 'text-green' : 'text-red'}`;
+        
+          document.getElementById('sysHeart').textContent =
+            healthData.bpm > 0 ? 'Online' : 'Offline';
+          document.getElementById('sysHeart').className =
+            `status-value ${healthData.bpm > 0 ? 'text-green' : 'text-gray'}`;
+        
+          document.getElementById('sysFall').textContent = 'Active';
+          document.getElementById('sysFall').className = 'status-value text-green';
         }
 
         // Open Google Maps
