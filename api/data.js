@@ -1,18 +1,16 @@
-let latestData = {
-  bpm: 0,
-  temperature: 0,
-  fall: false,
-  timestamp: null
-};
-
-export default function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method === "POST") {
-    const { bpm, temperature, fall } = req.body;
+
+    const body = typeof req.body === "string"
+      ? JSON.parse(req.body)
+      : req.body;
+
+    const { bpm, temperature, fall } = body;
 
     latestData = {
-      bpm: bpm ?? 0,
-      temperature: temperature ?? 0,
-      fall: fall ?? false,
+      bpm: Number(bpm) || 0,
+      temperature: Number(temperature) || 0,
+      fall: fall === 1 || fall === true,
       timestamp: new Date().toISOString()
     };
 
