@@ -11,18 +11,22 @@ export default async function handler(req, res) {
 
       let body = req.body;
 
-      if (typeof body === "string") {
-        body = JSON.parse(body);
+      if (!body) {
+        return res.status(200).json({ ignored: true });
       }
 
-      const bpm = Number(body?.bpm) || 0;
-      const temperature = Number(body?.temperature) || 0;
-      const fall = body?.fall === 1 || body?.fall === "1" || body?.fall === true;
+      if (typeof body === "string") {
+        try {
+          body = JSON.parse(body);
+        } catch {
+          return res.status(200).json({ ignored: true });
+        }
+      }
 
       latestData = {
-        bpm,
-        temperature,
-        fall,
+        bpm: Number(body.bpm) || 0,
+        temperature: Number(body.temperature) || 0,
+        fall: body.fall === 1 || body.fall === "1" || body.fall === true,
         timestamp: new Date().toISOString()
       };
 
@@ -36,7 +40,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
 
   } catch (err) {
-    console.error("API ERROR:", err);
-    return res.status(500).json({ error: "Server error" });
+    console.error("SERVER ERROR:", err);
+    return res.status(200).json({ recovered: true });
   }
 }
